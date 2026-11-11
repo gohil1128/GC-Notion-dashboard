@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="God's Chai cutting-chai glass mark">
+  <rect width="200" height="200" fill="#F5ECE0"/>
+  <!-- steam -->
+  <g fill="#B65C3C">
+    <polygon points="76,20 86,20 80,52 70,52"/>
+    <polygon points="96,12 106,12 100,52 90,52"/>
+    <polygon points="116,20 126,20 120,52 110,52"/>
+  </g>
+  <!-- glass body -->
+  <polygon points="44,62 156,62 140,182 60,182" fill="#3A2012"/>
+  <polygon points="58,74 142,74 129,170 71,170" fill="#F5ECE0"/>
+  <!-- chai fill -->
+  <polygon points="61,96 139,96 129,170 71,170" fill="#B65C3C"/>
+  <!-- cutting-glass ridges -->
+  <g fill="#3A2012"><rect x="62" y="120" width="76" height="6"/><rect x="66" y="144" width="68" height="6"/></g>
+</svg>

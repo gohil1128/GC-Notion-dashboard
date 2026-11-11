@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="God's Chai GC monogram">
+  <rect width="200" height="200" fill="#B65C3C"/>
+  <!-- brush slash: echoes the stroke under "God's" in the primary logo -->
+  <polygon points="34,44 168,30 168,40 34,55" fill="#3A2012"/>
+  <polygon points="150,26 172,24 172,28 150,30" fill="#3A2012"/>
+  <g fill="#F5ECE0">
+    <!-- G -->
+    <polygon points="34,72 94,66 94,86 54,88 54,144 74,144 74,128 64,128 64,108 94,108 94,164 34,164"/>
+    <!-- C -->
+    <polygon points="106,66 166,60 166,82 126,84 126,144 166,144 166,164 106,164"/>
+  </g>
+</svg>

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GC Home Base</title>
+<meta name="description" content="God's Chai — Notion home base dashboard.">
+<link rel="icon" type="image/svg+xml" href="assets/logo/gc-monogram.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+/* ─────────────────────────────────────────────────────────────
+   GOD'S CHAI — HOME BASE
+   Style: Swiss grid + neo-brutalism. Square corners only,
+   hard rules, hard offset shadows, condensed caps.
+   Brand colours sampled from the primary logo.
+   ───────────────────────────────────────────────────────────── */
+:root{
+  --choc:#3A2012;        /* "CHAI" letterforms */
+  --choc-soft:#6B4A38;   /* secondary text */
+  --terra:#B65C3C;       /* "God's" brush script */
+  --terra-ink:#9A4A2E;   /* terracotta for small text (AA on cream) */
+  --cream:#F5ECE0;       /* page */
+  --paper:#FBF7F1;       /* raised surfaces */
+  --milk:#E8D9C5;        /* chai-with-milk tint for quiet fills */
+
+  --rule:2px solid var(--choc);
+  --rule-thin:1px solid var(--choc);
+  --shadow:6px 6px 0 var(--choc);
+  --shadow-press:2px 2px 0 var(--choc);
+
+  --display:"Anton","Impact","Arial Narrow",sans-serif;
+  --body:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+
+  --gutter:clamp(16px,3vw,40px);
+  --rail:248px;
+}
+*,*::before,*::after{box-sizing:border-box;border-radius:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--cream);color:var(--choc);font:400 15px/1.5 var(--body);overflow-x:hidden}
+a{color:inherit}
+img{display:block;max-width:100%}
+:focus-visible{outline:3px solid var(--terra);outline-offset:2px}
+
+/* ── Shell ───────────────────────────────────────────── */
+.shell{display:grid;grid-template-columns:var(--rail) minmax(0,1fr);min-height:100vh}
+
+/* ── Rail (logo always visible) ──────────────────────── */
+.rail{position:sticky;top:0;height:100vh;border-right:var(--rule);display:flex;flex-direction:column;background:var(--cream)}
+.rail__logo{padding:28px 28px 24px;border-bottom:var(--rule)}
+.rail__logo img{width:100%;max-width:168px;margin:0 auto}
+.nav{list-style:none;margin:0;padding:0;border-bottom:var(--rule)}
+.nav a{display:grid;grid-template-columns:36px 1fr;align-items:center;padding:12px 24px;text-decoration:none;font:600 13px/1 var(--body);letter-spacing:.08em;text-transform:uppercase;border-bottom:var(--rule-thin)}
+.nav li:last-child a{border-bottom:0}
+.nav a span{font:600 11px/1 var(--mono);color:var(--terra-ink)}
+.nav a:hover,.nav a[aria-current="true"]{background:var(--choc);color:var(--cream)}
+.nav a:hover span,.nav a[aria-current="true"] span{color:var(--milk)}
+.rail__ext{padding:20px 24px;display:grid;gap:8px}
+.rail__ext a{font:600 11px/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;text-decoration:none;display:flex;justify-content:space-between}
+.rail__ext a:hover{color:var(--terra-ink)}
+.rail__foot{margin-top:auto;border-top:var(--rule);display:grid;grid-template-columns:56px 1fr;align-items:center}
+.rail__foot img{width:56px;height:56px;border-right:var(--rule)}
+.rail__foot p{margin:0;padding:0 14px;font:600 10px/1.35 var(--mono);letter-spacing:.06em;text-transform:uppercase}
+
+/* ── Main ────────────────────────────────────────────── */
+main{min-width:0}
+.wrap{padding:0 var(--gutter);max-width:1180px}
+
+/* Masthead */
+.mast{border-bottom:var(--rule);display:grid;grid-template-columns:minmax(0,1fr) auto}
+.mast__text{padding:40px var(--gutter) 32px}
+.eyebrow{font:600 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--terra-ink);margin:0 0 16px}
+.mast h1{font:400 clamp(44px,7vw,92px)/.92 var(--display);text-transform:uppercase;margin:0;letter-spacing:.005em}
+.mast h1 em{font-style:normal;color:var(--terra)}
+.mast__sub{margin:16px 0 0;font-size:17px;max-width:46ch;color:var(--choc-soft)}
+.date{border-left:var(--rule);display:grid;grid-template-rows:auto 1fr auto;min-width:200px;background:var(--choc);color:var(--cream)}
+.date__dow{padding:14px 18px;font:600 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;border-bottom:2px solid var(--cream)}
+.date__day{padding:6px 18px 0;font:400 108px/1 var(--display);align-self:center}
+.date__mon{padding:12px 18px;font:600 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;background:var(--terra)}
+
+/* Section header: Swiss index row */
+section{border-bottom:var(--rule);padding:0 0 48px;scroll-margin-top:84px}
+.sh{display:grid;grid-template-columns:auto 1fr auto;align-items:end;gap:20px;padding:36px var(--gutter) 24px}
+.sh__num{font:400 56px/.8 var(--display);color:transparent;-webkit-text-stroke:1.5px var(--choc)}
+.sh h2{margin:0;font:400 34px/.9 var(--display);text-transform:uppercase;border-bottom:var(--rule);padding-bottom:8px}
+.sh__meta{font:600 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--choc-soft);padding-bottom:10px}
+
+/* ── 01 Focus ────────────────────────────────────────── */
+.focus{margin:0 var(--gutter);border:var(--rule);background:var(--paper);box-shadow:var(--shadow)}
+.focus ol{list-style:none;margin:0;padding:0;counter-reset:f}
+.focus li{display:grid;grid-template-columns:56px 44px 1fr;align-items:center;border-bottom:var(--rule-thin);min-height:60px}
+.focus li:last-child{border-bottom:0}
+.focus li::before{counter-increment:f;content:counter(f,decimal-leading-zero);font:400 22px/1 var(--display);height:100%;display:grid;place-items:center;border-right:var(--rule-thin);background:var(--milk)}
+.check{appearance:none;-webkit-appearance:none;width:22px;height:22px;margin:0 auto;border:var(--rule);background:var(--paper);cursor:pointer;display:grid;place-items:center}
+.check:checked{background:var(--terra);border-color:var(--terra)}
+.check:checked::after{content:"";width:10px;height:5px;border-left:3px solid var(--cream);border-bottom:3px solid var(--cream);transform:translateY(-2px) rotate(-45deg)}
+.focus input[type=text]{width:100%;border:0;background:transparent;font:500 17px/1.3 var(--body);color:var(--choc);padding:16px 16px 16px 0}
+.focus input[type=text]::placeholder{color:var(--choc-soft);opacity:.55}
+.focus li.done input[type=text]{text-decoration:line-through;text-decoration-thickness:2px;text-decoration-color:var(--terra);color:var(--choc-soft)}
+.focus__bar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-top:var(--rule);padding:12px 16px;background:var(--cream)}
+.focus__bar p{margin:0;font:600 11px/1.3 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--choc-soft)}
+.btn{font:600 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;background:var(--choc);color:var(--cream);border:var(--rule);padding:10px 14px;cursor:pointer}
+.btn:hover{background:var(--terra);border-color:var(--terra)}
+
+/* ── Link blocks (02 / 03 / 05) ──────────────────────── */
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:24px;padding:0 var(--gutter)}
+.block{border:var(--rule);background:var(--paper);box-shadow:var(--shadow);display:flex;flex-direction:column}
+.block__head{display:flex;justify-content:space-between;align-items:center;background:var(--choc);color:var(--cream);padding:12px 16px}
+.block__head h3{margin:0;font:400 20px/1 var(--display);text-transform:uppercase;letter-spacing:.02em}
+.block__head span{font:600 10px/1 var(--mono);letter-spacing:.1em;color:var(--milk)}
+.links{list-style:none;margin:0;padding:0}
+.links a{display:grid;grid-template-columns:28px 1fr auto;align-items:center;gap:8px;padding:14px 16px;border-bottom:var(--rule-thin);text-decoration:none;font-weight:500}
+.links li:last-child a{border-bottom:0}
+.links a .n{font:600 10px/1 var(--mono);color:var(--terra-ink)}
+.links a .arr{font:600 14px/1 var(--mono);transition:transform .12s}
+.links a:hover{background:var(--terra);color:var(--cream)}
+.links a:hover .n{color:var(--cream)}
+.links a:hover .arr{transform:translate(2px,-2px)}
+
+/* Tiles (content) */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:24px;padding:0 var(--gutter)}
+.tile{display:flex;flex-direction:column;justify-content:space-between;gap:28px;min-height:150px;padding:18px;border:var(--rule);background:var(--paper);box-shadow:var(--shadow);text-decoration:none;transition:transform .1s,box-shadow .1s}
+.tile:hover{transform:translate(4px,4px);box-shadow:var(--shadow-press)}
+.tile__k{font:600 10px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--terra-ink);display:flex;justify-content:space-between}
+.tile__t{font:400 clamp(24px,2.4vw,30px)/.95 var(--display);text-transform:uppercase}
+
+/* Hot / Cold pillars */
+.pillars{display:grid;grid-template-columns:1fr 1fr;margin:32px var(--gutter) 0;border:var(--rule)}
+.pillar{padding:24px}
+.pillar--hot{background:var(--choc);color:var(--cream);border-right:var(--rule)}
+.pillar--cold{background:var(--terra);color:var(--cream)}
+.pillar__k{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;opacity:.85;margin:0 0 10px}
+.pillar h3{margin:0 0 6px;font:400 44px/.9 var(--display);text-transform:uppercase}
+.pillar__feel{margin:0 0 20px;font:600 13px/1.4 var(--body);letter-spacing:.04em;text-transform:uppercase}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0;list-style:none}
+.chips li{font:600 11px/1 var(--mono);letter-spacing:.04em;text-transform:uppercase;padding:7px 9px;border:1.5px solid currentColor}
+.pillar__note{margin:18px 0 0;font-size:13px;opacity:.9;max-width:40ch}
+
+/* ── 04 Brand core ───────────────────────────────────── */
+.brand{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);margin:0 var(--gutter);border:var(--rule);background:var(--paper)}
+.brand__main{padding:28px;border-right:var(--rule)}
+.statement{margin:0 0 28px;font:400 clamp(26px,3.2vw,38px)/1.02 var(--display);text-transform:uppercase}
+.statement mark{background:none;color:var(--terra)}
+.kv{display:grid;grid-template-columns:120px 1fr;border-top:var(--rule-thin)}
+.kv dt,.kv dd{margin:0;padding:14px 0;border-bottom:var(--rule-thin)}
+.kv dt{font:600 10px/1.6 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--terra-ink)}
+.kv dd ol{margin:0;padding-left:18px}
+.kv dd li+li{margin-top:6px}
+.brand__side{display:flex;flex-direction:column}
+.ritual{padding:28px;background:var(--milk);border-bottom:var(--rule)}
+.ritual p{margin:0;font:400 28px/1 var(--display);text-transform:uppercase}
+.ritual small{display:block;margin-top:10px;font:600 10px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--choc-soft)}
+.swatches{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:var(--rule)}
+.sw{aspect-ratio:1/1.15;display:flex;flex-direction:column;justify-content:flex-end;padding:8px;font:600 9px/1.3 var(--mono);letter-spacing:.04em;text-transform:uppercase;border-right:var(--rule-thin)}
+.sw:last-child{border-right:0}
+.marks{display:grid;grid-template-columns:repeat(3,1fr)}
+.marks figure{margin:0;border-right:var(--rule-thin)}
+.marks figure:last-child{border-right:0}
+.marks img{width:100%;aspect-ratio:1;object-fit:contain}
+.marks .plate{background:var(--cream);padding:10px}
+.marks figcaption{padding:8px;font:600 9px/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;border-top:var(--rule-thin)}
+.type{padding:16px 20px;border-top:var(--rule);display:grid;gap:4px}
+.type b{font:400 24px/1 var(--display);text-transform:uppercase}
+.type span{font:600 10px/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--choc-soft)}
+
+/* ── 05 Personal ─────────────────────────────────────── */
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;padding:0 var(--gutter)}
+
+/* ── Footer band ─────────────────────────────────────── */
+.band{background:var(--choc);color:var(--cream);display:grid;grid-template-columns:auto 1fr auto;align-items:stretch}
+.band img{width:88px;height:88px;border-right:2px solid var(--cream)}
+.band__t{align-self:center;padding:0 24px;font:400 clamp(26px,4.4vw,56px)/1 var(--display);text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:clip}
+.band__t em{font-style:normal;color:var(--terra)}
+.band__meta{border-left:2px solid var(--cream);padding:0 20px;display:flex;align-items:center;font:600 10px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--milk)}
+
+/* ── Responsive / Notion embed width ─────────────────── */
+@media (max-width:1100px){
+  .brand{grid-template-columns:1fr}
+  .brand__side{display:grid;grid-template-columns:1fr 1fr}
+  .ritual{grid-column:1/-1}
+  .swatches{grid-template-columns:1fr 1fr;border-bottom:0;border-right:var(--rule)}
+  .sw{aspect-ratio:auto;min-height:72px;border-bottom:var(--rule-thin)}
+  .marks{align-content:start}
+  .type{grid-column:1/-1}
+  .brand__main{border-right:0;border-bottom:var(--rule)}
+}
+@media (max-width:960px){
+  .shell{grid-template-columns:1fr}
+  .rail{position:sticky;top:0;z-index:10;height:auto;border-right:0;border-bottom:var(--rule);display:grid;grid-template-columns:auto minmax(0,1fr)}
+  .rail__logo{padding:8px 14px;border-bottom:0;border-right:var(--rule)}
+  .rail__logo img{width:auto;height:56px;max-width:none}
+  .rail>nav{display:flex;min-width:0}
+  .nav{display:flex;overflow-x:auto;border-bottom:0;scrollbar-width:none;width:100%}
+  .nav::-webkit-scrollbar{display:none}
+  .nav li{flex:0 0 auto;display:flex}
+  .nav a{height:100%;grid-template-columns:auto auto;gap:8px;padding:0 16px;border-bottom:0;border-right:var(--rule-thin)}
+  .rail__ext,.rail__foot{display:none}
+  .mast{grid-template-columns:1fr}
+  .date{border-left:0;border-top:var(--rule);grid-template-columns:auto 1fr auto;grid-template-rows:auto;align-items:stretch}
+  .date__dow,.date__mon{display:flex;align-items:center;border-bottom:0}
+  .date__dow{border-right:2px solid var(--cream)}
+  .date__day{font-size:44px;padding:8px 18px}
+}
+@media (max-width:700px){
+  .grid2,.pillars{grid-template-columns:1fr}
+  .brand__side{grid-template-columns:1fr}
+  .swatches{grid-template-columns:repeat(4,1fr);border-right:0;border-bottom:var(--rule)}
+  .pillar--hot{border-right:0;border-bottom:var(--rule)}
+  .sh{grid-template-columns:auto 1fr;gap:14px}
+  .sh__meta{display:none}
+  .sh__num{font-size:44px}
+  .sh h2{font-size:28px}
+  .kv{grid-template-columns:1fr}
+  .kv dt{border-bottom:0;padding-bottom:0}
+  .band{grid-template-columns:auto 1fr}
+  .band img{width:64px;height:64px}
+  .band__t{font-size:22px;padding:0 14px;white-space:normal}
+  .band__meta{display:none}
+  .focus li{grid-template-columns:44px 40px 1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- ═════════ RAIL ═════════ -->
+  <aside class="rail" aria-label="God's Chai home base">
+    <a class="rail__logo" href="#top" aria-label="God's Chai — back to top">
+      <img src="assets/logo/gods-chai-logo.png" alt="God's Chai — Not your average chai">
+    </a>
+    <nav aria-label="Sections">
+      <ul class="nav">
+        <li><a href="#today"><span>01</span>Focus Today</a></li>
+        <li><a href="#hub"><span>02</span>Business Hub</a></li>
+        <li><a href="#content"><span>03</span>Content &amp; Ideas</a></li>
+        <li><a href="#brand"><span>04</span>Brand Core</a></li>
+        <li><a href="#personal"><span>05</span>Personal</a></li>
+      </ul>
+    </nav>
+    <div class="rail__ext">
+      <a href="https://www.godschai.com" target="_blank" rel="noopener">godschai.com <span>↗</span></a>
+      <a href="https://www.instagram.com/godschai/" target="_blank" rel="noopener">@godschai <span>↗</span></a>
+      <a data-notion="home" target="_blank" rel="noopener">Notion home <span>↗</span></a>
+    </div>
+    <div class="rail__foot">
+      <img src="assets/logo/gc-monogram.svg" alt="">
+      <p>Kadak.<br>Every single cup.</p>
+    </div>
+  </aside>
+
+  <!-- ═════════ MAIN ═════════ -->
+  <main id="top">
+
+    <header class="mast">
+      <div class="mast__text">
+        <p class="eyebrow">GC Home Base — Saskatoon, SK</p>
+        <h1><span id="greet">Welcome back</span>.<br><em>Kadak</em> day ahead.</h1>
+        <p class="mast__sub">Everything important, one glance away. Three things today, then back to the chai.</p>
+      </div>
+      <div class="date" aria-live="polite">
+        <div class="date__dow" id="dow">—</div>
+        <div class="date__day" id="day">—</div>
+        <div class="date__mon" id="mon">—</div>
+      </div>
+    </header>
+
+    <!-- 01 FOCUS -->
+    <section id="today" aria-labelledby="h-today">
+      <div class="sh"><div class="sh__num">01</div><h2 id="h-today">Focus Today</h2><div class="sh__meta">3 max · clear daily</div></div>
+      <div class="focus">
+        <ol id="focus-list">
+          <li><input class="check" type="checkbox" aria-label="Done"><input type="text" maxlength="80" placeholder="Focus item" aria-label="Focus item 1"></li>
+          <li><input class="check" type="checkbox" aria-label="Done"><input type="text" maxlength="80" placeholder="Focus item" aria-label="Focus item 2"></li>
+          <li><input class="check" type="checkbox" aria-label="Done"><input type="text" maxlength="80" placeholder="Focus item" aria-label="Focus item 3"></li>
+        </ol>
+        <div class="focus__bar">
+          <p>Keep it to three. Saved in this browser.</p>
+          <button class="btn" id="newday" type="button">New day — clear</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 BUSINESS HUB -->
+    <section id="hub" aria-labelledby="h-hub">
+      <div class="sh"><div class="sh__num">02</div><h2 id="h-hub">Business Hub</h2><div class="sh__meta">9 pages</div></div>
+      <div class="grid3">
+        <div class="block">
+          <div class="block__head"><h3>Brand &amp; Website</h3><span>A</span></div>
+          <ul class="links">
+            <li><a data-notion="brandCore"><span class="n">A1</span>Brand Core<span class="arr">↗</span></a></li>
+            <li><a data-notion="homepage"><span class="n">A2</span>Website: Homepage Structure<span class="arr">↗</span></a></li>
+          </ul>
+        </div>
+        <div class="block">
+          <div class="block__head"><h3>Recipes &amp; Product</h3><span>B</span></div>
+          <ul class="links">
+            <li><a data-notion="skuRecipes"><span class="n">B1</span>SKU Recipes<span class="arr">↗</span></a></li>
+            <li><a data-notion="finalSkus"><span class="n">B2</span>Final SKUs for 2026<span class="arr">↗</span></a></li>
+            <li><a data-notion="ingredients"><span class="n">B3</span>Ingredients<span class="arr">↗</span></a></li>
+            <li><a data-notion="prices"><span class="n">B4</span>Prices<span class="arr">↗</span></a></li>
+          </ul>
+        </div>
+        <div class="block">
+          <div class="block__head"><h3>Ops</h3><span>C</span></div>
+          <ul class="links">
+            <li><a data-notion="qtyServe"><span class="n">C1</span>Quantity to Serve<span class="arr">↗</span></a></li>
+            <li><a data-notion="qtyTomorrow"><span class="n">C2</span>Quantities for Tomorrow<span class="arr">↗</span></a></li>
+            <li><a data-notion="invoices"><span class="n">C3</span>Invoices<span class="arr">↗</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 CONTENT -->
+    <section id="content" aria-labelledby="h-content">
+      <div class="sh"><div class="sh__num">03</div><h2 id="h-content">Content &amp; Ideas</h2><div class="sh__meta">Feed @godschai</div></div>
+      <div class="tiles">
+        <a class="tile" data-notion="reels"><span class="tile__k"><span>D1 · Instagram / TikTok</span><span>↗</span></span><span class="tile__t">Reel Ideas</span></a>
+        <a class="tile" data-notion="ideas"><span class="tile__k"><span>D2 · Backlog</span><span>↗</span></span><span class="tile__t">Ideas to Work On</span></a>
+        <a class="tile" data-notion="foak"><span class="tile__k"><span>D3 · Event</span><span>↗</span></span><span class="tile__t">Foak Festival</span></a>
+      </div>
+      <div class="pillars">
+        <div class="pillar pillar--hot">
+          <p class="pillar__k">Content pillar — Hot</p>
+          <h3>Cozy ritual</h3>
+          <p class="pillar__feel">Cozy · Comforting · Grounding</p>
+          <ul class="chips"><li>Classic Hot Chai</li><li>Stovetop brew</li><li>Premix pouches</li><li>Samosa pairing</li></ul>
+          <p class="pillar__note">Slow shots: steam, pour, whole spices from Kerala, Assam leaf. The coffee-swap morning.</p>
+        </div>
+        <div class="pillar pillar--cold">
+          <p class="pillar__k">Content pillar — Cold</p>
+          <h3>Statement cups</h3>
+          <p class="pillar__feel">Exciting · Eye-catching · Must-photo</p>
+          <ul class="chips"><li>Iced Chai</li><li>Gulabo Rose</li><li>Iced Chocolate</li><li>YXE's Mont Blanc</li><li>Banana Bread</li><li>Lavender Cold Foam</li></ul>
+          <p class="pillar__note">Layers, colour, cold foam close-ups. Things people screenshot and tag.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 BRAND CORE -->
+    <section id="brand" aria-labelledby="h-brand">
+      <div class="sh"><div class="sh__num">04</div><h2 id="h-brand">Brand Core</h2><div class="sh__meta"><a data-notion="brandCore" target="_blank" rel="noopener">Full page ↗</a></div></div>
+      <div class="brand">
+        <div class="brand__main">
+          <p class="statement">A <mark>chai-first</mark> beverage brand in Saskatoon. Cozy hot chai, visually striking cold chai, a coffee alternative for Gen Z &amp; millennials.</p>
+          <dl class="kv">
+            <dt>Audience</dt>
+            <dd>Saskatoon Gen Z &amp; millennials looking past coffee and sugary “chai tea”, ready to make chai an everyday ritual.</dd>
+            <dt>Different</dt>
+            <dd><ol>
+              <li>Not your average chai. Chai-focused and flavour-led, never a chain-style “chai tea”.</li>
+              <li>Spices direct from Kerala, tea from Assam. Real origin, real quality.</li>
+              <li>Hot drinks that comfort, cold drinks that look as good as they taste.</li>
+            </ol></dd>
+            <dt>Now</dt>
+            <dd>Build desire &amp; trust as <em>the</em> chai brand in Saskatoon. Prep for premix &amp; concentrate orders. Drive follows and pop-up visits.</dd>
+          </dl>
+        </div>
+        <div class="brand__side">
+          <div class="ritual"><p>“This is my new ritual instead of coffee.”</p><small>The feeling we design for</small></div>
+          <div class="swatches" aria-label="Brand colours">
+            <div class="sw" style="background:#3A2012;color:#F5ECE0">Chocolate<br>#3A2012</div>
+            <div class="sw" style="background:#B65C3C;color:#F5ECE0">Terracotta<br>#B65C3C</div>
+            <div class="sw" style="background:#E8D9C5">Chai milk<br>#E8D9C5</div>
+            <div class="sw" style="background:#F5ECE0">Cream<br>#F5ECE0</div>
+          </div>
+          <div class="marks">
+            <figure><div class="plate"><img src="assets/logo/gods-chai-logo.png" alt="Primary logo"></div><figcaption>Primary</figcaption></figure>
+            <figure><img src="assets/logo/gc-monogram.svg" alt="GC monogram sub-logo"><figcaption>Sub · GC</figcaption></figure>
+            <figure><img src="assets/logo/gc-glass.svg" alt="Cutting-chai glass sub-logo"><figcaption>Sub · Glass</figcaption></figure>
+          </div>
+          <div class="type">
+            <b>Anton — Headlines</b>
+            <span>Archivo — body · IBM Plex Mono — labels</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 PERSONAL -->
+    <section id="personal" aria-labelledby="h-personal">
+      <div class="sh"><div class="sh__num">05</div><h2 id="h-personal">Personal</h2><div class="sh__meta">2 pages</div></div>
+      <div class="grid2">
+        <div class="block">
+          <div class="block__head"><h3>Lists</h3><span>E</span></div>
+          <ul class="links"><li><a data-notion="shopping"><span class="n">E1</span>To-Do List Shopping<span class="arr">↗</span></a></li></ul>
+        </div>
+        <div class="block">
+          <div class="block__head"><h3>Links</h3><span>F</span></div>
+          <ul class="links"><li><a data-notion="myLinks"><span class="n">F1</span>My Links (database)<span class="arr">↗</span></a></li></ul>
+        </div>
+      </div>
+    </section>
+
+    <footer class="band">
+      <img src="assets/logo/gc-monogram-terracotta.svg" alt="">
+      <div class="band__t">Not your <em>average</em> chai.</div>
+      <div class="band__meta">Saskatoon · YXE</div>
+    </footer>
+  </main>
+</div>
+
+<script>
+/* Notion page links — edit here when pages move. */
+const NOTION = {
+  home:        "3e0ebb8c1bac81ceaff8d70f92cd0e22",
+  brandCore:   "383ebb8c1bac808ea1b7f688f2c9077c",
+  homepage:    "383ebb8c1bac801786b4fd85088a3f38",
+  skuRecipes:  "348ebb8c1bac800c9be2cb3a3cc102c7",
+  finalSkus:   "348ebb8c1bac80caa78aca4bcd479994",
+  ingredients: "348ebb8c1bac8001949bff3cd4321cf4",
+  prices:      "34aebb8c1bac80069892f99923c24940",
+  qtyServe:    "375ebb8c1bac80c5b105c13dab6e9b82",
+  qtyTomorrow: "377ebb8c1bac80169a64cb01a4d85619",
+  invoices:    "348ebb8c1bac801d8d59e5182c0a3e0b",
+  reels:       "368ebb8c1bac8031a2c2ef81a1b638bc",
+  ideas:       "346ebb8c1bac80449368efdf895c3399",
+  foak:        "368ebb8c1bac80c7a03cc470c6109eb9",
+  shopping:    "f02ebb8c1bac8375889f819e9c9d53e8",
+  myLinks:     "341ebb8c1bac8195a018f28eeefc4ec7"
+};
+document.querySelectorAll("[data-notion]").forEach(a => {
+  const id = NOTION[a.dataset.notion];
+  if (!id) return;
+  a.href = "https://www.notion.so/" + id;
+  a.target = "_blank"; a.rel = "noopener";
+});
+
+/* Date + greeting in Saskatoon time */
+(function () {
+  const tz = "America/Regina", now = new Date();
+  const f = o => new Intl.DateTimeFormat("en-CA", Object.assign({ timeZone: tz }, o)).format(now);
+  document.getElementById("dow").textContent = f({ weekday: "long" });
+  document.getElementById("day").textContent = f({ day: "2-digit" });
+  document.getElementById("mon").textContent = f({ month: "short", year: "numeric" });
+  const h = +f({ hour: "numeric", hour12: false }) % 24;
+  document.getElementById("greet").textContent = h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening";
+})();
+
+/* Focus Today — three slots, stored per browser */
+(function () {
+  const KEY = "gc.focus.v1";
+  const DEFAULTS = ["Check quantities for tomorrow", "Review invoices", "One reel idea to post"];
+  const rows = [...document.querySelectorAll("#focus-list li")];
+  let state;
+  try { state = JSON.parse(localStorage.getItem(KEY)); } catch (e) {}
+  if (!state || !Array.isArray(state.items)) state = { items: DEFAULTS.map(t => ({ t, d: false })) };
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} };
+  const render = () => rows.forEach((li, i) => {
+    const it = state.items[i] || { t: "", d: false };
+    const [cb, tx] = li.querySelectorAll("input");
+    cb.checked = it.d; tx.value = it.t; li.classList.toggle("done", it.d);
+  });
+  rows.forEach((li, i) => {
+    const [cb, tx] = li.querySelectorAll("input");
+    cb.addEventListener("change", () => { state.items[i] = { t: tx.value, d: cb.checked }; li.classList.toggle("done", cb.checked); save(); });
+    tx.addEventListener("input", () => { state.items[i] = { t: tx.value, d: cb.checked }; save(); });
+  });
+  document.getElementById("newday").addEventListener("click", () => {
+    state.items = [0, 1, 2].map(() => ({ t: "", d: false })); save(); render();
+    rows[0].querySelector("input[type=text]").focus();
+  });
+  render();
+})();
+
+/* Highlight current section in the rail */
+(function () {
+  const links = [...document.querySelectorAll(".nav a")];
+  const map = new Map(links.map(a => [a.getAttribute("href").slice(1), a]));
+  if (!("IntersectionObserver" in window)) return;
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { links.forEach(l => l.removeAttribute("aria-current")); map.get(e.target.id)?.setAttribute("aria-current", "true"); }
+  }), { rootMargin: "-40% 0px -55% 0px" });
+  map.forEach((_, id) => { const s = document.getElementById(id); if (s) io.observe(s); });
+})();
+</script>
+</body>
+</html>
