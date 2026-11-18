@@ -30,11 +30,11 @@ The look is **Swiss grid + neo-brutalism** instead of rounded, soft UI:
 
 | Token | Hex | Use |
 | --- | --- | --- |
-| Chocolate | `#3A2012` | Text, rules, headers, the "hot" pillar |
-| Terracotta | `#B65C3C` | Accent, highlights, the "cold" pillar (large text and fills only) |
-| Terracotta ink | `#9A4A2E` | Terracotta for small text (passes AA contrast on cream) |
+| Chocolate | `#3C2116` | Text, rules, headers, the "hot" pillar |
+| Terracotta | `#B55F3E` | Accent, highlights, the "cold" pillar (large text and fills only) |
+| Terracotta ink | `#8B472C` | Terracotta for small text (passes AA contrast on cream) |
 | Chai milk | `#E8D9C5` | Quiet fills |
-| Cream | `#F5ECE0` | Page background |
+| Cream | `#F2EBE1` | Page background |
 
 ### How the Brand Core shapes the design
 
